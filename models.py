@@ -44,10 +44,25 @@ class NearEarthObject:
         # You should coerce these values to their appropriate data type and
         # handle any edge cases, such as a empty name being represented by `None`
         # and a missing diameter being represented by `float('nan')`.
-        self.designation = ''
-        self.name = None
-        self.diameter = float('nan')
-        self.hazardous = False
+        for key, value in info.items():
+            if key.lower() == 'pdes':
+                self.designation = str(value)
+            elif key.lower() == 'name':
+                self.name = str(value)
+            elif key.lower() == 'diameter':
+                self.diameter = float('nan')
+            elif key.lower() == 'pha':
+                self.hazardous = str(value)
+                if self.hazardous.lower() == 'y':
+                    self.hazardous = True
+                else:
+                    self.hazardous = False
+
+
+
+
+
+
 
         # Create an empty initial collection of linked approaches.
         self.approaches = []
@@ -55,15 +70,23 @@ class NearEarthObject:
     @property
     def fullname(self):
         """Return a representation of the full name of this NEO."""
-        # TODO: Use self.designation and self.name to build a fullname for this object.
-        return ''
+        if self.designation is not None:
+            return f"'{self.designation}{self.fullname}'"
+        else:
+            return f"'{self.designation}'"
+
 
     def __str__(self):
         """Return `str(self)`."""
-        # TODO: Use this object's attributes to return a human-readable string representation.
         # The project instructions include one possibility. Peek at the __repr__
         # method for examples of advanced string formatting.
-        return f"A NearEarthObject ..."
+        if self.hazardous:
+            return f'NEO {self.name} has a diameter of {self.diameter} km ' \
+                   f'and is potentially hazardous.'
+        else:
+            return f'NEO {self.name} has a diameter of {self.diameter} km ' \
+                   f'and is not potentially hazardous.'
+
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
@@ -84,8 +107,7 @@ class CloseApproach:
     private attribute, but the referenced NEO is eventually replaced in the
     `NEODatabase` constructor.
     """
-    # TODO: How can you, and should you, change the arguments to this constructor?
-    # If you make changes, be sure to update the comments in this file.
+
     def __init__(self, **info):
         """Create a new `CloseApproach`.
 
@@ -95,10 +117,32 @@ class CloseApproach:
         # onto attributes named `_designation`, `time`, `distance`, and `velocity`.
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
-        self._designation = ''
-        self.time = None  # TODO: Use the cd_to_datetime function for this attribute.
-        self.distance = 0.0
-        self.velocity = 0.0
+        for key, value in info.items():
+            if key.lower() == 'des':
+                try:
+                    self._designation = str(value)
+                except ValueError:
+                    print(f'The {key} is not type of string')
+            elif key.lower() == 'cd':
+                try:
+                    self.time = self.time = cd_to_datetime(str(value))
+                except ValueError:
+                    print('f{key} is not type time')
+
+            elif key.lower() == 'dist':
+                try:
+                    self.distance = float(value)
+                except ValueError:
+                    print(f'The type of {key} is not float')
+            elif key.lower() == 'v_rel':
+                 try:
+                     self.velocity = float(value)
+                 except ValueError:
+                     # print the text message
+                     print(f'The type of {key} is not float')
+
+
+
 
         # Create an attribute for the referenced NEO, originally None.
         self.neo = None
