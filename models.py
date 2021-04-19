@@ -113,14 +113,14 @@ class CloseApproach:
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
-        # TODO: Assign information from the arguments passed to the constructor
+
         # onto attributes named `_designation`, `time`, `distance`, and `velocity`.
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
         for key, value in info.items():
             if key.lower() == 'des':
                 try:
-                    self._designation = str(value)
+                    self.designation = str(value)
                 except ValueError:
                     print(f'The {key} is not type of string')
             elif key.lower() == 'cd':
@@ -160,17 +160,18 @@ class CloseApproach:
         formatted string that can be used in human-readable representations and
         in serialization to CSV and JSON files.
         """
-        # TODO: Use this object's `.time` attribute and the `datetime_to_str` function to
+
         # build a formatted representation of the approach time.
-        # TODO: Use self.designation and self.name to build a fullname for this object.
-        return ''
+
+        return datetime_to_str(self.time)
 
     def __str__(self):
         """Return `str(self)`."""
-        # TODO: Use this object's attributes to return a human-readable string representation.
         # The project instructions include one possibility. Peek at the __repr__
         # method for examples of advanced string formatting.
-        return f"A CloseApproach ..."
+        return f'- On {self.time}, {self.neo.fullname} approaches Earth ' \
+               f'at a distance of {round(self.distance, 2)} au' \
+               f' and velocity of {round(self.velocity, 2)} km/s.'
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""

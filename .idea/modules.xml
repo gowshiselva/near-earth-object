@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/near-earth-object.iml" filepath="$PROJECT_DIR$/.idea/near-earth-object.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../pytest-examples/.idea/pytest-examples.iml" filepath="$PROJECT_DIR$/../pytest-examples/.idea/pytest-examples.iml" />
     </modules>
   </component>
 </project>
